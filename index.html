@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>neosoob.cn</title>
+  <title>neosoob</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <style>
     :root {
       --bg-1: #fdfcff;
@@ -201,16 +202,19 @@
 <body>
   <main>
     <h1 id="site-title"></h1>
-    <div class="links">
+    <!-- <div class="links">
       <a href="https://github.com/neosoob/" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </div>
+    </div> -->
   </main>
   <script>
     (() => {
-      const text = "neosoob.cn";
+      const texts = [
+        "neosoob.com",
+        "greetings."
+      ];
       const typeDelay = 180;
       const eraseDelay = 100;
-      const holdDelay = 1500;
+      const holdDelay = 1000;
       const restartDelay = 250;
       const title = document.getElementById("site-title");
 
@@ -218,14 +222,17 @@
         return;
       }
 
-      let index = 0;
+      let textIndex = 0;
+      let charIndex = 0;
       let isDeleting = false;
 
       const tick = () => {
+        const currentText = texts[textIndex];
+
         if (!isDeleting) {
-          index += 1;
-          title.textContent = text.slice(0, index);
-          if (index === text.length) {
+          charIndex += 1;
+          title.textContent = currentText.slice(0, charIndex);
+          if (charIndex === currentText.length) {
             isDeleting = true;
             setTimeout(tick, holdDelay);
             return;
@@ -234,10 +241,11 @@
           return;
         }
 
-        index -= 1;
-        title.textContent = text.slice(0, index);
-        if (index === 0) {
+        charIndex -= 1;
+        title.textContent = currentText.slice(0, charIndex);
+        if (charIndex === 0) {
           isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
           setTimeout(tick, restartDelay);
           return;
         }
